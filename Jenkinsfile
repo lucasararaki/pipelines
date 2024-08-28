@@ -1,7 +1,10 @@
 pipeline {
     agent any
       tools {
-        nodejs 'nodeRecent' 
+        dockerTool {
+	  image 'node:lts-bullseye-slim'
+	  args '-p 3000:3000'
+	}
       }
     environment { 
         CI = 'true'
@@ -26,6 +29,6 @@ pipeline {
                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
                 sh './jenkins/scripts/kill.sh'
             }
-        }      
+        }  
     }
 }
